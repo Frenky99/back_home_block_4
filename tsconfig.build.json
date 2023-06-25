@@ -1,0 +1,6 @@
+// расширяет tsconfig.json, и описывает какие файлы и папки нужно исключить на этапе сборки
+
+{
+  "extends": "./tsconfig.json",
+  "exclude": ["node_modules", "test", "dist", "**/*spec.ts"]
+}
