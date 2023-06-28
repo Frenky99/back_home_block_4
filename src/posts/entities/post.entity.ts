@@ -1,5 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinTable } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { Category } from 'src/category/entities/category.entity';
+import { ApiProperty } from '@nestjs/swagger';
 
 export enum postStatusEnum {
     DRAW = 'Черновик',
@@ -9,18 +10,25 @@ export enum postStatusEnum {
 
 @Entity()
 export class Post {
+    @ApiProperty({
+        minimum: 1
+    })
+
     @PrimaryGeneratedColumn()
     id: number;
 
+    @ApiProperty()
     @Column()
     title: string;
 
+    @ApiProperty()
     @Column()
     description: string
 
     @ManyToOne(type => Category, category => category.posts, {eager: true})
     category: Category
 
+    @ApiProperty()
     @Column({
         type: 'enum',
         enum: postStatusEnum,
@@ -28,6 +36,7 @@ export class Post {
     })
     status: postStatusEnum
 
+    @ApiProperty()
     @Column({
         type: 'datetime'
     })
