@@ -1,5 +1,5 @@
 export class CreatePostDto {
     title: string
     description: string
-    categoryId: number
+    category_id: number
 }
