@@ -15,7 +15,7 @@ export class AuthService {
     const user = await this.usersService.findOne(email);
     //если пользователь существует и пароль совпадает с переданным паролем, мы возвращаем результат, иначе Null
     if (user && (await bcrypt.compare(password, user.password))) {
-      const { password, ...result } = user;
+      const { ...result } = user;
       return result;
     }
     return null;

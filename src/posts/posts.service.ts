@@ -10,13 +10,13 @@ import * as moment from 'moment';
 export class PostsService {
   constructor(
     @InjectRepository(Post)
-    private repository: Repository<Post>
-  ) { }
+    private repository: Repository<Post>,
+  ) {}
 
   create(data: CreatePostDto) {
     return this.repository.save({
       ...data,
-      changed_at: moment().format('YYYY-MM-DD HH:mm:ss')
+      changed_at: moment().format('YYYY-MM-DD HH:mm:ss'),
     });
   }
 
@@ -28,8 +28,8 @@ export class PostsService {
     return this.repository.findOneBy({ id });
   }
 
-  update(id: number, data: UpdatePostDto) {    
-    return this.repository.save({...data, id});
+  update(id: number, data: UpdatePostDto) {
+    return this.repository.save({ ...data, id });
   }
 
   async remove(id: number) {

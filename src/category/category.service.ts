@@ -9,8 +9,8 @@ import { Category } from './entities/category.entity';
 export class CategoryService {
   constructor(
     @InjectRepository(Category)
-    private repository: Repository<Category>
-  ) { }
+    private repository: Repository<Category>,
+  ) {}
 
   create(data: CreateCategoryDto) {
     return this.repository.save(data);
@@ -23,8 +23,8 @@ export class CategoryService {
   findOne(id: number) {
     return this.repository.findOneBy({ id });
   }
-  update(id: number, data: UpdateCategoryDto) {    
-    return this.repository.save({...data, id});
+  update(id: number, data: UpdateCategoryDto) {
+    return this.repository.save({ ...data, id });
   }
 
   async remove(id: number) {

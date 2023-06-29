@@ -29,15 +29,14 @@ import { AuthModule } from './auth/auth.module';
       entities: [Category, Post, User],
       synchronize: true,
     }),
-    CategoryModule, 
+    CategoryModule,
     PostsModule,
     UsersModule,
-    AuthModule
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-
 export class AppModule {
   constructor(private dataSource: DataSource) {}
 }
