@@ -2,29 +2,31 @@
  * Юнит-тесты для контроллера
  */
 
-import { Controller, Request, Post, Body, UseGuards } from '@nestjs/common';
-import { CreateUserDto } from './users/dto/create-user.dto';
+import { Controller, Request, Post, Body, UseGuards, UsePipes } from '@nestjs/common';
+import { CreateUserDto, CreateUserSchema } from './users/dto/create-user.dto';
 import { UsersService } from './users/users.service';
+import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from 'src/auth/auth.service';
-import { LocalAuthGuard } from './auth/local-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
+import { JoiValidationPipe } from './pipes/ValidationPipe';
 
 @ApiTags('Auth')
 @Controller()
 export class AppController {
   constructor(
     private readonly usersService: UsersService,
-    private authService: AuthService,
+    private authService: AuthService
   ) {}
 
   @Post('auth/register')
-  register(@Body() createUserDto: CreateUserDto):Promise<any> {
+  // когда будет приходить запрос, убдет срабатывать JoiValidationPipe и проверяться валидность заполненных данных createCatSchema
+  @UsePipes(new JoiValidationPipe(CreateUserSchema))
+  register(@Body() createUserDto: CreateUserDto) {
     return this.usersService.register(createUserDto);
   }
-
-  @UseGuards(LocalAuthGuard)
+  @UseGuards(AuthGuard('local'))
   @Post('auth/login')
-  async login(@Request() req):Promise<any> {
+  async login(@Request() req) {
     return this.authService.login(req.user);
   }
 }
